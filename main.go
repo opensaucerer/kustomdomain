@@ -60,9 +60,11 @@ func main() {
 	})
 
 	go func() {
-		time.AfterFunc(5*time.Second, func() {
-			barf.Logger().Debug("5 seconds has passed")
-		})
+		ti := time.NewTicker(2 * time.Second)
+
+		for t := range ti.C {
+			barf.Logger().Info(t.String() + " :: I am alive!")
+		}
 	}()
 
 	// create & start server
