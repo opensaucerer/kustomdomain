@@ -31,7 +31,7 @@ func main() {
 		barf.Response(w).Status(http.StatusOK).JSON(barf.Res{
 			Status:  true,
 			Data:    nil,
-			Message: "Welcome " + strings.Split(r.Host, ".")[0],
+			Message: "OK",
 		})
 	})
 
