@@ -27,8 +27,14 @@ func main() {
 		os.Exit(1)
 	}
 
-	// barf tries to be as unobtrusive as possible, so your route handlers still
-	// inherit the standard http.ResponseWriter and *http.Request parameters
+	barf.Get("/health", func(w http.ResponseWriter, r *http.Request) {
+		barf.Response(w).Status(http.StatusOK).JSON(barf.Res{
+			Status:  true,
+			Data:    nil,
+			Message: "Welcome " + strings.Split(r.Host, ".")[0],
+		})
+	})
+
 	barf.Get("/", func(w http.ResponseWriter, r *http.Request) {
 
 		barf.Logger().Debug(r.Host)
