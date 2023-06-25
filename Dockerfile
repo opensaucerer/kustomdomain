@@ -7,17 +7,15 @@ ENV CGO_ENABLED=0
 ARG PORT
 ENV PORT $PORT
 
-ENV VERSION 1.0.0
-
-# mount env file - Render cloud stores .env secrets in this location hence the need to mount unto the docker image
+# mount env file
 RUN --mount=type=secret,id=_env,dst=/etc/secrets/.env cat /etc/secrets/.env
 
 WORKDIR /app
 COPY . .
 
 RUN go mod download
-RUN go build -o bin/app -ldflags "-X main.Version=$VERSION" main.go
+RUN go build -o main .
 
 EXPOSE $PORT
 
-CMD [ "bin/app" ]
+CMD [ "./main" ]
