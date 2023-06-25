@@ -16,7 +16,7 @@ WORKDIR /app
 COPY . .
 
 RUN go mod download
-RUN go build -o bin/app -ldflags "-X main.Version=$VERSION" app/main.go
+RUN go build -o bin/app -ldflags "-X main.Version=$VERSION" main.go
 
 EXPOSE $PORT
 
