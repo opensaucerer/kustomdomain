@@ -10,9 +10,22 @@ import (
 
 func main() {
 
-	barf.Stark(barf.Augment{
-		Port: os.Getenv("PORT"),
-	})
+	type Env struct {
+		// Port for the server to listen on
+		Port string `barfenv:"key=PORT;required=true"`
+	}
+
+	env := new(Env)
+
+	allow := true
+	if err := barf.Stark(barf.Augment{
+		Port:     env.Port,
+		Logging:  &allow, // enable request logging
+		Recovery: &allow, // enable panic recovery so barf returns a 500 error instead of crashing
+	}); err != nil {
+		barf.Logger().Error(err.Error())
+		os.Exit(1)
+	}
 
 	// barf tries to be as unobtrusive as possible, so your route handlers still
 	// inherit the standard http.ResponseWriter and *http.Request parameters
