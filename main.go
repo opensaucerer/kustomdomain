@@ -10,6 +10,10 @@ import (
 
 func main() {
 
+	barf.Stark(barf.Augment{
+		Port: "8080",
+	})
+
 	// barf tries to be as unobtrusive as possible, so your route handlers still
 	// inherit the standard http.ResponseWriter and *http.Request parameters
 	barf.Get("/", func(w http.ResponseWriter, r *http.Request) {
