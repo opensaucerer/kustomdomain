@@ -17,6 +17,8 @@ func main() {
 
 	env := new(Env)
 
+	barf.Env(env)
+
 	allow := true
 	if err := barf.Stark(barf.Augment{
 		Port:     env.Port,
