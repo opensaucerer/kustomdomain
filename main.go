@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/opensaucerer/barf"
 )
@@ -57,6 +58,12 @@ func main() {
 			Message: "Get thee behind me, oh Satan!",
 		})
 	})
+
+	go func() {
+		time.AfterFunc(5*time.Second, func() {
+			barf.Logger().Debug("5 seconds has passed")
+		})
+	}()
 
 	// create & start server
 	if err := barf.Beck(); err != nil {
