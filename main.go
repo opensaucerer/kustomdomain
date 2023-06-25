@@ -24,6 +24,7 @@ func main() {
 		Port:     env.Port,
 		Logging:  &allow, // enable request logging
 		Recovery: &allow, // enable panic recovery so barf returns a 500 error instead of crashing
+		Host:     "localhost",
 	}); err != nil {
 		barf.Logger().Error(err.Error())
 		os.Exit(1)
