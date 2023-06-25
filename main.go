@@ -24,21 +24,13 @@ func main() {
 		Port:     env.Port,
 		Logging:  &allow, // enable request logging
 		Recovery: &allow, // enable panic recovery so barf returns a 500 error instead of crashing
-		Host:     "localhost",
+		Host:     "0.0.0.0",
 	}); err != nil {
 		barf.Logger().Error(err.Error())
 		os.Exit(1)
 	}
 
 	barf.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		barf.Response(w).Status(http.StatusOK).JSON(barf.Res{
-			Status:  true,
-			Data:    nil,
-			Message: "OK",
-		})
-	})
-
-	barf.Get("/home", func(w http.ResponseWriter, r *http.Request) {
 
 		barf.Logger().Debug(r.Host)
 
