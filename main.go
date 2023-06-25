@@ -37,7 +37,7 @@ func main() {
 		})
 	})
 
-	barf.Get("/", func(w http.ResponseWriter, r *http.Request) {
+	barf.Get("/home", func(w http.ResponseWriter, r *http.Request) {
 
 		barf.Logger().Debug(r.Host)
 
