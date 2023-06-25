@@ -11,7 +11,7 @@ import (
 func main() {
 
 	barf.Stark(barf.Augment{
-		Port: "8080",
+		Port: os.Getenv("PORT"),
 	})
 
 	// barf tries to be as unobtrusive as possible, so your route handlers still
