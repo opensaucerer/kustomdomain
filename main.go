@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -30,25 +31,50 @@ func main() {
 		os.Exit(1)
 	}
 
+	domains := map[string]string{
+		"cendit.io":        "cenditio",
+		"opensaucerer.com": "opensaucerer",
+		"cendit.pro":       "cenditpro",
+		"localhost":        "localhost",
+	}
+
 	barf.Get("/", func(w http.ResponseWriter, r *http.Request) {
 
 		barf.Logger().Debug(r.Host)
 
-		if strings.Split(r.Host, ".")[0] == "opensaucerer" {
+		barf.Logger().Debug("referring host: " + r.Header.Get("ReferringHost"))
 
-			barf.Response(w).Status(http.StatusOK).JSON(barf.Res{
-				Status:  true,
+		if _, ok := domains[r.Header.Get("ReferringHost")]; !ok {
+
+			barf.Response(w).Status(http.StatusNotFound).JSON(barf.Res{
+				Status:  false,
 				Data:    nil,
-				Message: "Welcome " + strings.Split(r.Host, ".")[0],
+				Message: "Get thee behind me, oh Satan!",
 			})
 			return
 		}
 
-		barf.Response(w).Status(http.StatusNotFound).JSON(barf.Res{
-			Status:  false,
+		barf.Response(w).Status(http.StatusOK).JSON(barf.Res{
+			Status:  true,
 			Data:    nil,
-			Message: "Get thee behind me, oh Satan!",
+			Message: "Welcome " + strings.Split(r.Host, ".")[0],
 		})
+
+	})
+
+	barf.Get("/tls/ask", func(w http.ResponseWriter, r *http.Request) {
+
+		q, _ := barf.Request(r).Query().JSON()
+
+		log.Println(q)
+
+		if _, ok := domains[q["domain"]]; ok {
+
+			barf.Response(w).Status(http.StatusOK).JSON(barf.Res{})
+			return
+		}
+
+		barf.Response(w).Status(http.StatusNotFound).JSON(barf.Res{})
 	})
 
 	// create & start server
