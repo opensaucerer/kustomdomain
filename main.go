@@ -36,6 +36,9 @@ func main() {
 		"opensaucerer.com": "opensaucerer",
 		"cendit.pro":       "cenditpro",
 		"localhost":        "localhost",
+		"164.92.156.239":   "digitaloceanipv4",
+		"164.92.144.1":     "digitaloceangateway",
+		"255.255.240.0":    "digitaloceanmask",
 	}
 
 	barf.Get("/", func(w http.ResponseWriter, r *http.Request) {
