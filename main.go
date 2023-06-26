@@ -4,7 +4,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strings"
 
 	"github.com/opensaucerer/barf"
 )
@@ -60,7 +59,7 @@ func main() {
 		barf.Response(w).Status(http.StatusOK).JSON(barf.Res{
 			Status:  true,
 			Data:    nil,
-			Message: "Welcome " + strings.Split(r.Host, ".")[0],
+			Message: "Welcome " + domains[r.Header.Get("ReferringHost")] + "!",
 		})
 
 	})
