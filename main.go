@@ -73,11 +73,19 @@ func main() {
 
 		if _, ok := domains[q["domain"]]; ok {
 
-			barf.Response(w).Status(http.StatusOK).JSON(barf.Res{})
+			barf.Response(w).Status(http.StatusOK).JSON(barf.Res{
+				Status:  true,
+				Data:    nil,
+				Message: "Welcome son! Here's your TLS access",
+			})
 			return
 		}
 
-		barf.Response(w).Status(http.StatusNotFound).JSON(barf.Res{})
+		barf.Response(w).Status(http.StatusNotFound).JSON(barf.Res{
+			Status:  false,
+			Data:    nil,
+			Message: "Get thee behind me, oh TLS Satan!",
+		})
 	})
 
 	// create & start server
